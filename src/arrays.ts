@@ -40,7 +40,7 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    let newNum: string = "";
+    //let newNum: string = "";
     const ints = amounts.map((num: string): number => {
         if (num[0] == "$") {
             num = num.slice(1);
