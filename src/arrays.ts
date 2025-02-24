@@ -5,7 +5,11 @@
  * the number twice.
  */
 export function bookEndList(numbers: number[]): number[] {
-    return numbers;
+    return (
+        numbers.length == 0 ? []
+        : numbers.length == 1 ? [numbers[0], numbers[0]]
+        : [numbers[0], numbers[numbers.length - 1]]
+    );
 }
 
 /**
@@ -13,7 +17,8 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return numbers;
+    const tripled = numbers.map((num: number): number => num * 3);
+    return tripled;
 }
 
 /**
@@ -21,7 +26,10 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    const ints = numbers.map((num: string): number =>
+        parseInt(num) ? parseInt(num) : 0,
+    );
+    return ints;
 }
 
 /**
@@ -32,7 +40,17 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    return [];
+    let newNum: string = "";
+    const ints = amounts.map((num: string): number => {
+        if (num[0] == "$") {
+            num = num.slice(1);
+        }
+        if (parseInt(num)) {
+            return parseInt(num);
+        }
+        return 0;
+    });
+    return ints;
 };
 
 /**
@@ -41,7 +59,14 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    return [];
+    messages = messages.filter((str) => !str.endsWith("?"));
+    const newMess = messages.map((message: string): string => {
+        if (message.endsWith("!")) {
+            return message.toUpperCase();
+        }
+        return message;
+    });
+    return newMess;
 };
 
 /**
@@ -49,7 +74,8 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
-    return 0;
+    const shortWords = words.filter((word: string): boolean => word.length < 4);
+    return shortWords.length;
 }
 
 /**
@@ -58,7 +84,14 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    return false;
+    if (colors.length == 0) {
+        return true;
+    }
+    const trueColors = colors.every(
+        (color: string): boolean =>
+            color == "red" || color == "blue" || color == "green",
+    );
+    return trueColors;
 }
 
 /**
@@ -69,7 +102,12 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    if (addends.length == 0) {
+        return "0=0";
+    }
+    const sum = addends.reduce((total: number, num: number) => total + num, 0);
+    const operation = addends.join("+");
+    return sum.toString() + "=" + operation;
 }
 
 /**
@@ -82,5 +120,22 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    let sum = 0;
+    //get index of negative number
+    const allPos = values.every((num: number): boolean => num >= 0);
+    const index = values.findIndex((num: number): boolean => num < 0);
+    //if there is a negative value
+    if (!allPos) {
+        const summedList = values.slice(0, index);
+        sum = summedList.reduce((total: number, num: number) => total + num, 0);
+        values.splice(index + 1, 0, sum);
+    } else {
+        //if there isn't a negative value
+        sum = values.reduce((total: number, num: number) => total + num, 0);
+        values.push(sum);
+    }
+    //splice list to get the list of numbers to be summed
+    //get the sum
+    //add sum to existing list
+    return values;
 }
